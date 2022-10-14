@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
+    <title>{{title}}</title>
+</head>
+<body>
+    <p></p>
+    <p></p>
+    <a href="https://blog.csdn.net/plan_jok/article/details/109725095">https://blog.csdn.net/plan_jok/article/details/109725095</a>
+    <p></p>
+    <p></p>
+    {% if session.user %}
+        {{session.user}}
+    {% else %}
+    <a href="{{url_for('login', username='default')}}">登录</a>
+    {% endif %}
+    {{ get_flashed_messages()[0] }}
+    <p></p>
+    {{ get_flashed_messages()[1] }}
+    {% for project in p %}
+    {% set time = project['create_time']%}
+    {% if not loop.last and loop.index is divisibleby(2) %}
+    {# 中括号或者点号都支持 #}
+    <div>序号： {{loop.nextitem.name}},  项目名称： {{project['name']}},  项目ID： {{project.id}},  创建时间： {{time | s_time}}</div>
+    {% else %}
+    <div>序号： {{loop.index}},  项目名称： {{project['name'] | capitalize}},  项目ID： {{project.id}},  创建时间： {{c_time_key(time)}}</div>
+    {% endif %}
+    {% endfor %}
+
+    <p></p>
+    全局变量g: {{ g }}<p></p>
+    全局变量config: {{ config }}<p></p>
+    SECRET_KEY值: {{ config.SECRET_KEY }}<p></p>
+    全局变量session: {{ session }}<p></p>
+    用户名: {{ session.user }}<p></p>
+    {{ msgone | default('nonono', True)}} <p></p>
+    {% if test_json is jsoned%}
+        True: {{test_json}}
+    {% else %}
+        False: {{test_json}}
+    {% endif %}<p></p>
+    {{user}}<p></p>
+
+    <img src="../static/for_loop.jpg" alt="">
+    <img src="../static/guandao.png" alt="">
+    <img src="../static/guandao1.png" alt="">
+    <img src="../static/guandao2.png" alt="">
+    <img src="../static/test.png" alt="">
+    <img src="../static/test1.png" alt="">
+    <img src="../static/context_handle.png" alt="">
+    <img src="../static/context_handle1.png" alt="">
+    <img src="../static/global_func.png" alt="">
+</body>
+</html>
